@@ -1,0 +1,22 @@
+package window;
+
+import land.Land;
+import player.Player;
+
+public class Game {
+    static boolean inGame = true;
+    public static boolean focus = true;//if the player can move or not
+    
+    static void init(){
+        ImageCenter.skewAll();
+        Land.initRooms();
+        Player.init();
+    }
+    
+    static void update(){
+        if(focus){
+            Player.update();
+            Land.update();
+        }
+    }
+}
