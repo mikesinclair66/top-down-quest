@@ -5,31 +5,31 @@ import javax.swing.ImageIcon;
 
 public class ImageCenter{
     //player (without clothes/armor)
-    public static Image up0 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image up1 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image up2 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image up3 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image up4 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image right0 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image right1 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image right2 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image right3 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image right4 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
+    public static Image up0 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image up1 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image up2 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image up3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image up4 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image right0 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image right1 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image right2 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image right3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image right4 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
     public static Image down0 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image down1 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image down2 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image down3 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image down4 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image left0 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image left1 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image left2 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image left3 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
-    public static Image left4 = new ImageIcon("..\\..\\..\\images\\down0.png").getImage();
+    public static Image down1 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image down2 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image down3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image down4 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image left0 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image left1 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image left2 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image left3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image left4 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
     
     //door and door animations
-    public static Image door_brown = new ImageIcon("..\\..\\..\\images\\door_brown.png").getImage();
-    public static Image door_brown1 = new ImageIcon("..\\..\\..\\images\\door_brown1.png").getImage();
-    public static Image door_brown2 = new ImageIcon("..\\..\\..\\images\\door_brown2.png").getImage();
+    public static Image door_brown1 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\door_brown1.png").getImage();
+    public static Image door_brown2 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\door_brown2.png").getImage();
+    public static Image door_brown3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\door_brown3.png").getImage();
     
     //ground
     public static Image ground_stone = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBean"
@@ -46,6 +46,11 @@ public class ImageCenter{
     public static void skewAll(){
         int x = MainFrame.blockWidth;
         int y = MainFrame.blockHeight;
+        
+        //door images
+        door_brown1 = door_brown1.getScaledInstance(x, y, Image.SCALE_SMOOTH);
+        door_brown2 = door_brown2.getScaledInstance(x, y, Image.SCALE_SMOOTH);
+        door_brown3 = door_brown3.getScaledInstance(x, y, Image.SCALE_SMOOTH);
         
         //player images
         up0 = up0.getScaledInstance(x, y, Image.SCALE_SMOOTH);

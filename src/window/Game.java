@@ -16,7 +16,8 @@ public class Game {
     static void update(){
         if(focus){
             Player.update();
-            Land.update();
         }
+        
+        Land.update();
     }
 }

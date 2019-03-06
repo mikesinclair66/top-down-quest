@@ -2,9 +2,10 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import player.Player;
 import window.Game;
-import window.ImageCenter;
+import window.MainFrame;
 
 /**
  * This class is used for any
@@ -22,11 +23,16 @@ public class Door {
     
     boolean openAnimation;//true if the open animation is taking place
     boolean closeAnimation;
+    boolean open;//true if the door is open
     int animationCount;//used in animation() to time the animation
     
-    public int x, y;//these are set by either a room or area object
+    int x, y;//these are set by either a room or area object
     
+    Image anim, anim2, anim3;//door animations
     Image img;
+    
+    //determines which side of the room the door is on (only applicable to rooms)
+    int roomSide;
     
     /**
      * Constructor for door.
@@ -40,33 +46,97 @@ public class Door {
     }
     
     public void draw(Graphics2D comp){
-        comp.drawImage(img, x - Player.dx, y - Player.dy, null);
+        AffineTransform standard = comp.getTransform();
+        
+        //based on the comp rotation, these variables push the door to its original spot
+        int offX = 0, offY = 0;
+        
+        switch(roomSide){
+            case 1:
+                comp.rotate(Math.toRadians(90), x + MainFrame.blockWidth / 2
+                        - Player.dx, y + MainFrame.blockHeight / 2 - Player.dy);
+                offY = MainFrame.blockHeight / 6;
+                break;
+            case 2:
+                comp.rotate(Math.toRadians(180), x + MainFrame.blockWidth / 2
+                        - Player.dx, y + MainFrame.blockHeight / 2 - Player.dy);
+                offX = MainFrame.blockHeight / 8;
+                break;
+            case 3:
+                comp.rotate(Math.toRadians(270), x + MainFrame.blockWidth / 2
+                        - Player.dx, y + MainFrame.blockHeight / 2 - Player.dy);
+                offY = MainFrame.blockHeight / 5;
+                break;
+        }
+        
+        comp.drawImage(img, x + offX - Player.dx, y + offY - Player.dy, null);
+        
+        comp.setTransform(standard);
     }
     
-    public void animateOpen(){
+    public void animate(){
+        if(!open){
+            if(Player.canInteract(x, y, roomSide))
+                openAnimation = true;
+        } else {
+            if(!Player.canInteract(x, y, roomSide) && !openAnimation && !closeAnimation)
+                closeAnimation = true;
+        }
+        
         if(openAnimation){
             animationCount++;
             
-            if(animationCount == 50)
-                img = ImageCenter.door_brown1;
-            else if(animationCount == 100){
-                img = ImageCenter.door_brown2;
+            if(animationCount == 8)
+                img = anim2;
+            else if(animationCount == 16){
+                img = anim3;
                 animationCount = 0;
                 openAnimation = false;
-                Game.focus = true;//MAKE THIS SET TO FALSE WHEN THE DOOR FIRST STARTS OPENING
+                open = true;
             }
         }
         
         else if(closeAnimation){
             animationCount++;
             
-            if(animationCount == 50)
-                img = ImageCenter.door_brown1;
-            else if(animationCount == 100){
-                img = ImageCenter.door_brown;
+            if(animationCount == 8)
+                img = anim2;
+            else if(animationCount == 16){
+                img = anim;
                 animationCount = 0;
                 closeAnimation = false;
+                open = false;
             }
         }
+    }
+    
+    /**
+     * Sets the image for an non-openable door.
+     */
+    public void setImages(Image img) throws IllegalArgumentException {
+        if(openable){
+            System.err.println("Error: an openable door must have 3 animations.");
+            throw new IllegalArgumentException();
+        } else 
+            anim = img;
+        
+        this.img = anim;
+    }
+    
+    /**
+     * Sets the image for an openable door.
+     */
+    public void setImages(Image img, Image img2, Image img3)
+        throws IllegalArgumentException {
+        if(!openable){
+            System.err.println("Error: A non-openable door must have only 1 image.");
+            throw new IllegalArgumentException();
+        } else{
+            anim = img;
+            anim2 = img2;
+            anim3 = img3;
+        }
+        
+        this.img = anim;
     }
 }

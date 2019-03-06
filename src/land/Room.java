@@ -22,6 +22,7 @@ public class Room {
     private int topBound, rightBound, bottomBound, leftBound;
     
     Door[] doors = new Door[0];
+    Obstacle[] obs = new Obstacle[0];
     
     /**
      * Constructor for room. Width and height
@@ -58,13 +59,54 @@ public class Room {
      * @param side wall for the door (0-3)
      * @param coord block on the wall which is used for the door
      */
-    void addDoor(Door door, int side, int coord){
+    void addDoor(Door door, int side, int coord) throws IllegalArgumentException {
+        if(coord > width){
+            System.err.println("Error: third argument must be <= width");
+            throw new IllegalArgumentException();
+        }
+        
         //increase the doors array's size by 1
         Door[] temp = new Door[doors.length + 1];
         System.arraycopy(doors, 0, temp, 0, doors.length);
         doors = temp;
         
+        switch(side){
+            case 0:
+                door.x = (begX + coord) * MainFrame.blockWidth;
+                door.y = (begY - 1) * MainFrame.blockHeight;
+                break;
+            case 1:
+                door.x = (endX + 1) * MainFrame.blockWidth;
+                door.y = (begY + coord) * MainFrame.blockHeight;
+                break;
+            case 2:
+                door.x = (begX + coord) * MainFrame.blockWidth;
+                door.y = (endY + 1) * MainFrame.blockHeight;
+                break;
+            case 3:
+                door.x = (begX - 1) * MainFrame.blockWidth;
+                door.y = (begY + coord) * MainFrame.blockHeight;
+                break;
+            default:
+                System.err.println("Error: side must be 0-3");
+                throw new IllegalArgumentException();
+        }
+        
         doors[doors.length - 1] = door;
+        door.roomSide = side;
+    }
+    
+    /** This function adds a wall to the room. */
+    void addWall(Obstacle o) {
+        o.x += begX;
+        o.y += begY;
+        
+        //increase the doors array's size by 1
+        Obstacle[] temp = new Obstacle[obs.length + 1];
+        System.arraycopy(obs, 0, temp, 0, obs.length);
+        obs = temp;
+        
+        obs[obs.length - 1] = o;
     }
     
     public void checkBounds(){
@@ -79,6 +121,10 @@ public class Room {
                 Player.dx = leftBound;
             else if(Player.dx > rightBound)
                 Player.dx = rightBound;
+            
+            //check if the player is trying to move past an obstacle
+            for(Obstacle o : obs)
+                o.checkBounds();
         }
     }
     
@@ -94,5 +140,12 @@ public class Room {
                             j * MainFrame.blockHeight - Player.dy, null);
             }
         }
+        
+        //draw every door that has been established in the room
+        for(Door d : doors)
+            d.draw(comp);
+        
+        for(Obstacle o : obs)
+            o.draw(comp);
     }
 }

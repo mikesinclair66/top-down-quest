@@ -2,6 +2,7 @@ package land;
 
 import java.awt.Graphics2D;
 import player.Player;
+import window.Game;
 import window.ImageCenter;
 import window.MainFrame;
 
@@ -27,12 +28,24 @@ public class Land {
      * every room variable.
      */
     public static void initRooms(){
-        rooms[0][0] = new Room(5, 7, ImageCenter.ground_stone, ImageCenter.wall_wood);
+        Door door;
+        Obstacle o;
+        
+        rooms[0][0] = new Room(10, 10, ImageCenter.ground_stone, ImageCenter.wall_wood);
+        door = new Door(true);
+        door.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        rooms[0][0].addDoor(door, 0, 3);
+        o = new Obstacle(7, 8, 2, 2, ImageCenter.wall_wood);
+        rooms[0][0].addWall(o);
         
         curRoom = rooms[0][0];
     }
     
     public static void update(){
-        curRoom.checkBounds();
+        if(inside){
+            curRoom.checkBounds();
+            for(Door d : curRoom.doors)
+                d.animate();
+        }
     }
 }
