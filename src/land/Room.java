@@ -2,7 +2,9 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import land.entities.Computer;
 import player.Player;
+import window.Game;
 import window.MainFrame;
 
 public class Room {
@@ -23,6 +25,9 @@ public class Room {
     
     Door[] doors = new Door[0];
     Obstacle[] obs = new Obstacle[0];
+    
+    //true if bounds have been added
+    boolean boundsAdded;
     
     /**
      * Constructor for room. Width and height
@@ -96,10 +101,23 @@ public class Room {
         door.roomSide = side;
     }
     
-    /** This function adds a wall to the room. */
-    void addWall(Obstacle o) {
-        o.x += begX;
-        o.y += begY;
+    /** This function adds a computer to the room. */
+    void addComputer(Computer c){
+        //reinitialize the computer to add the rooms wall size to its coordinates
+        c = new Computer(c.x + begX, c.y + begY);
+        
+        //increase the doors array's size by 1
+        Obstacle[] temp = new Obstacle[obs.length + 1];
+        System.arraycopy(obs, 0, temp, 0, obs.length);
+        obs = temp;
+        
+        obs[obs.length - 1] = c;
+    }
+    
+    /** This function adds an obstacle to the room. */
+    void addObstacle(Obstacle o) {
+        //reinitialize the obstacle to add the rooms wall size to its coordinates
+        o = new Obstacle(o.x + begX, o.y + begY, o.width, o.height, o.img);
         
         //increase the doors array's size by 1
         Obstacle[] temp = new Obstacle[obs.length + 1];
@@ -124,7 +142,14 @@ public class Room {
             
             //check if the player is trying to move past an obstacle
             for(Obstacle o : obs)
-                o.checkBounds();
+                o.update();
+            
+            //if the door is opened and the player is walking through, decrease bounds
+            for(Door d : doors)
+                if(!Game.focus && !boundsAdded && d.open){
+                    boundsAdded = true;
+                    addBounds(0, -1);
+                }
         }
     }
     
@@ -147,5 +172,25 @@ public class Room {
         
         for(Obstacle o : obs)
             o.draw(comp);
+    }
+    
+    /*  Increases or decreases the boundaries.
+        bound - which bound to change
+        qty - by how much */
+    private void addBounds(int bound, int qty){
+        switch(bound){
+            case 0:
+                this.topBound += qty * MainFrame.blockHeight;
+                break;
+            case 1:
+                this.rightBound += qty * MainFrame.blockWidth;
+                break;
+            case 2:
+                this.bottomBound += qty * MainFrame.blockHeight;
+                break;
+            case 3:
+                this.leftBound += qty * MainFrame.blockWidth;
+                break;
+        }
     }
 }

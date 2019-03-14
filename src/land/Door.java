@@ -76,11 +76,14 @@ public class Door {
     
     public void animate(){
         if(!open){
-            if(Player.canInteract(x, y, roomSide))
+            if(Player.canInteract(x, y, roomSide)){
                 openAnimation = true;
+                Game.focus = false;
+                Player.setDirection(0);//stop the player
+            }
         } else {
-            if(!Player.canInteract(x, y, roomSide) && !openAnimation && !closeAnimation)
-                closeAnimation = true;
+            if(!Game.focus)
+                movePlayerHere();
         }
         
         if(openAnimation){
@@ -108,6 +111,19 @@ public class Door {
                 open = false;
             }
         }
+    }
+    
+    /**
+     * Moves the player into the door.
+     * Used when focus is turned off.
+     */
+    private void movePlayerHere(){
+        if(Player.coordX < x)
+            Player.setDirection(3);
+        else if(Player.coordX > x + Player.speed)
+            Player.setDirection(7);
+        else
+            Player.setDirection(1);
     }
     
     /**

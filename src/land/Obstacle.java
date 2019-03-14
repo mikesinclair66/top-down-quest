@@ -6,12 +6,12 @@ import player.Player;
 import window.MainFrame;
 
 public class Obstacle {
-    int x, y;
+    public int x, y;
     int width, height;
-    Image img;
+    public Image img;
     
-    int ox, oy;
-    int oWidth, oHeight;
+    public int ox, oy;
+    public int oWidth, oHeight;
     
     public Obstacle(int x, int y, int width, int height, Image img)
         throws IllegalArgumentException {
@@ -25,9 +25,14 @@ public class Obstacle {
         this.width = width;
         this.height = height;
         this.img = img;
+        
+        ox = x * MainFrame.blockWidth;
+        oy = y * MainFrame.blockHeight;
+        oWidth = width * MainFrame.blockWidth;
+        oHeight = height * MainFrame.blockHeight;
     }
     
-    void draw(Graphics2D comp){
+    public void draw(Graphics2D comp){
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 comp.drawImage(img, (x + i) * MainFrame.blockWidth - Player.dx,
@@ -36,31 +41,34 @@ public class Obstacle {
         }
     }
     
-    void checkBounds(){
-        ox = x * MainFrame.blockWidth;
-        oy = y * MainFrame.blockHeight;
-        oWidth = width * MainFrame.blockWidth;
-        oHeight = height * MainFrame.blockHeight;
-        
-        int dir = getDirection();
-        
-        if(Player.coordX < ox + oWidth
-                && Player.coordX > (ox + oWidth / 2)
-                && Player.coordY > oy - MainFrame.blockHeight && Player.coordY < oy + oHeight)
-            Player.move(ox + oWidth - Player.coordX, 0);
-        else if(Player.coordX > ox - MainFrame.blockWidth
-                && Player.coordX <= (ox + oWidth / 2)
-                && Player.coordY > oy - MainFrame.blockHeight && Player.coordY < oy + oHeight)
-            Player.move(-(Player.coordX - (ox - MainFrame.blockWidth)), 0);
-    }
-    
     /**
-     * Gets the direction of the player
-     * in relation to the obstacle.
+     * This method checks the boundaries
+     * of the object.
      */
-    int getDirection(){
-        int dir = 0;
-        
-        return dir;
+    public void update(){
+        //if the player collides with the obstacle from above
+        if(Player.coordY > oy - MainFrame.blockHeight && Player.coordY <= oy + oHeight / 4
+                && Player.coordY - Player.speed <= oy - MainFrame.blockHeight
+                && Player.coordX > ox - MainFrame.blockWidth
+                && Player.coordX <= ox + oWidth)
+            Player.move(0, -Player.speed);
+        //from the right
+        else if(Player.coordX >= ox + (oWidth / 4) * 3 && Player.coordX < ox + oWidth
+                && Player.coordX + Player.speed >= ox + oWidth
+                && Player.coordY > oy - MainFrame.blockHeight
+                && Player.coordY <= oy + oHeight)
+            Player.move(Player.speed, 0);
+        //from the bottom
+        else if(Player.coordY >= oy + (oHeight / 4) * 3 && Player.coordY < oy + oHeight
+                && Player.coordY + Player.speed >= oy + oHeight
+                && Player.coordX > ox - MainFrame.blockWidth
+                && Player.coordX <= ox + oWidth)
+            Player.move(0, Player.speed);
+        //from the left
+        else if(Player.coordX > ox - MainFrame.blockWidth && Player.coordX <= ox + oWidth / 4
+                && Player.coordX - Player.speed <= ox - MainFrame.blockWidth
+                && Player.coordY > oy - MainFrame.blockHeight
+                && Player.coordY <= oy + oHeight)
+            Player.move(-Player.speed, 0);
     }
 }

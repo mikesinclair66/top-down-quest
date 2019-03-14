@@ -14,10 +14,7 @@ public class Game {
     }
     
     static void update(){
-        if(focus){
-            Player.update();
-        }
-        
+        Player.update();
         Land.update();
     }
 }

@@ -26,16 +26,18 @@ public class ImageCenter{
     public static Image left3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
     public static Image left4 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
     
+    public static Image computer = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\computer.png").getImage();
+    
     //door and door animations
     public static Image door_brown1 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\door_brown1.png").getImage();
     public static Image door_brown2 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\door_brown2.png").getImage();
     public static Image door_brown3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\door_brown3.png").getImage();
     
-    //ground
+    //ground images
     public static Image ground_stone = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBean"
             + "sProjects\\Top Down Quest\\images\\ground_stone.png").getImage();
     
-    //wall
+    //wall images
     public static Image wall_wood = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBean"
             + "sProjects\\Top Down Quest\\images\\wall_wood.png").getImage();
     
@@ -76,6 +78,8 @@ public class ImageCenter{
         left2 = down2.getScaledInstance(x, y, Image.SCALE_SMOOTH);
         left3 = down3.getScaledInstance(x, y, Image.SCALE_SMOOTH);
         left4 = down4.getScaledInstance(x, y, Image.SCALE_SMOOTH);
+        
+        computer = computer.getScaledInstance(x, y, Image.SCALE_SMOOTH);
         
         //ground images
         ground_stone = ground_stone.getScaledInstance(x, y, Image.SCALE_SMOOTH);

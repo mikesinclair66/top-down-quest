@@ -1,6 +1,7 @@
 package land;
 
 import java.awt.Graphics2D;
+import land.entities.Computer;
 import player.Player;
 import window.Game;
 import window.ImageCenter;
@@ -35,8 +36,9 @@ public class Land {
         door = new Door(true);
         door.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
         rooms[0][0].addDoor(door, 0, 3);
-        o = new Obstacle(7, 8, 2, 2, ImageCenter.wall_wood);
-        rooms[0][0].addWall(o);
+        o = new Obstacle(7, 7, 2, 2, ImageCenter.wall_wood);
+        rooms[0][0].addObstacle(o);
+        rooms[0][0].addComputer(new Computer(10, 0));
         
         curRoom = rooms[0][0];
     }

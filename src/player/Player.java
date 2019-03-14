@@ -13,7 +13,10 @@ public class Player {
     public static int coordX, coordY;//x + dx, y + dy
     
     //booleans for if the player is moving
-    static boolean up, right, down, left;
+    public static boolean up, right, down, left;
+    
+    //if the player is attempting to interact
+    public static boolean interact;
     
     static Image img;
     
@@ -51,7 +54,7 @@ public class Player {
                 if(coordX >= spotX - MainFrame.blockWidth / 2
                         && coordX <= spotX + MainFrame.blockWidth * (3 / 2)
                         && coordY >= spotY
-                        && coordY <= spotY + MainFrame.blockHeight * (5 / 2))
+                        && coordY <= spotY + MainFrame.blockHeight + MainFrame.blockHeight / 4)
                     return true;
                 break;
             case 1:
@@ -92,6 +95,9 @@ public class Player {
             case KeyEvent.VK_A:
                 left = true;
                 break;
+            case KeyEvent.VK_E:
+                interact = true;
+                break;
         }
     }
     
@@ -108,6 +114,9 @@ public class Player {
                 break;
             case KeyEvent.VK_A:
                 left = false;
+                break;
+            case KeyEvent.VK_E:
+                interact = false;
                 break;
         }
     }
@@ -150,5 +159,75 @@ public class Player {
     public static void move(int spotX, int spotY){
         dx += spotX;
         dy += spotY;
+    }
+    
+    /**
+     * Moves the player in the specified
+     * direction. (used when focus is false).
+     * The specified direction is a clockwise int:
+     * 0 - stay still
+     * 1-8 clockwise directions
+     */
+    public static void setDirection(int dir)
+        throws IllegalArgumentException {
+        switch(dir){
+            case 0:
+                up = false;
+                right = false;
+                down = false;
+                left = false;
+                break;
+            case 1:
+                up = true;
+                right = false;
+                down = false;
+                left = false;
+                break;
+            case 2:
+                up = true;
+                right = true;
+                down = false;
+                left = false;
+                break;
+            case 3:
+                up = false;
+                right = true;
+                down = false;
+                left = false;
+                break;
+            case 4:
+                up = false;
+                right = true;
+                down = true;
+                left = false;
+                break;
+            case 5:
+                up = false;
+                right = false;
+                down = true;
+                left = false;
+                break;
+            case 6:
+                up = false;
+                right = false;
+                down = true;
+                left = true;
+                break;
+            case 7:
+                up = false;
+                right = false;
+                down = false;
+                left = true;
+                break;
+            case 8:
+                up = true;
+                right = false;
+                down = false;
+                left = true;
+                break;
+            default:
+                System.err.println("Error: directions must be from 0-8.");
+                throw new IllegalArgumentException();
+        }
     }
 }
