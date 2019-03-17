@@ -101,23 +101,13 @@ public class Room {
         door.roomSide = side;
     }
     
-    /** This function adds a computer to the room. */
-    void addComputer(Computer c){
-        //reinitialize the computer to add the rooms wall size to its coordinates
-        c = new Computer(c.x + begX, c.y + begY);
-        
-        //increase the doors array's size by 1
-        Obstacle[] temp = new Obstacle[obs.length + 1];
-        System.arraycopy(obs, 0, temp, 0, obs.length);
-        obs = temp;
-        
-        obs[obs.length - 1] = c;
-    }
-    
     /** This function adds an obstacle to the room. */
     void addObstacle(Obstacle o) {
         //reinitialize the obstacle to add the rooms wall size to its coordinates
-        o = new Obstacle(o.x + begX, o.y + begY, o.width, o.height, o.img);
+        o.x += begX;
+        o.y += begY;
+        o.ox += begX * MainFrame.blockWidth;
+        o.oy += begY * MainFrame.blockHeight;
         
         //increase the doors array's size by 1
         Obstacle[] temp = new Obstacle[obs.length + 1];
@@ -127,7 +117,7 @@ public class Room {
         obs[obs.length - 1] = o;
     }
     
-    public void checkBounds(){
+    public void update(){
         if(Land.inside){
             //make sure the player doesn't go past the boundaries
             if(Player.dy < topBound)
@@ -145,11 +135,14 @@ public class Room {
                 o.update();
             
             //if the door is opened and the player is walking through, decrease bounds
-            for(Door d : doors)
+            for(Door d : doors){
                 if(!Game.focus && !boundsAdded && d.open){
                     boundsAdded = true;
                     addBounds(0, -1);
                 }
+                
+                d.animate();
+            }
         }
     }
     

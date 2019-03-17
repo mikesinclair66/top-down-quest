@@ -9,6 +9,7 @@ public class Game {
     
     static void init(){
         ImageCenter.skewAll();
+        Land.initAreas();
         Land.initRooms();
         Player.init();
     }

@@ -2,6 +2,7 @@ package window;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import land.entities.Computer;
 import player.Player;
 
 /**
@@ -19,16 +20,24 @@ public class Keys implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         
-        if(Game.inGame && Game.focus)
-            Player.keyPressed(key);
+        if(Game.inGame){
+            if(Game.focus)
+                Player.keyPressed(key);
+            else if(Computer.inUse)
+                Computer.keyPressed(key);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         
-        if(Game.inGame && Game.focus)
-            Player.keyReleased(key);
+        if(Game.inGame){
+            if(Game.focus)
+                Player.keyReleased(key);
+            else if(Computer.inUse)
+                Computer.keyReleased(key);
+        }
         
         if(key == KeyEvent.VK_CONTROL)
             System.exit(0);
