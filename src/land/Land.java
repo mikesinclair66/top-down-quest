@@ -13,7 +13,7 @@ public class Land {
     
     static Area curArea;//the area that the player is currently in
     public static Room curRoom;//the room that the player is currently in
-    static boolean inside = true;//true if the player is in a room
+    static boolean inside = false;//true if the player is in a room
     
     /**
      * This function draws
@@ -50,14 +50,14 @@ public class Land {
      * This function initializes every area variable.
      */
     public static void initAreas(){
+        areas[0] = new Area(3, 3);
         curArea = areas[0];
     }
     
     public static void update(){
-        if(inside){
+        if(inside)
             curRoom.update();
-        } else {
+        else
             curArea.update();
-        }
     }
 }

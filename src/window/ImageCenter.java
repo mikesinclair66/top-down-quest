@@ -34,6 +34,8 @@ public class ImageCenter{
     public static Image door_brown3 = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBeansProjects\\Top Down Quest\\images\\door_brown3.png").getImage();
     
     //ground images
+    public static Image ground_grass = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBean"
+            + "sProjects\\Top Down Quest\\images\\ground_grass.png").getImage();
     public static Image ground_stone = new ImageIcon("C:\\Users\\Acer\\Documents\\NetBean"
             + "sProjects\\Top Down Quest\\images\\ground_stone.png").getImage();
     
@@ -82,6 +84,7 @@ public class ImageCenter{
         computer = computer.getScaledInstance(x, y, Image.SCALE_SMOOTH);
         
         //ground images
+        ground_grass = ground_grass.getScaledInstance(x, y, Image.SCALE_SMOOTH);
         ground_stone = ground_stone.getScaledInstance(x, y, Image.SCALE_SMOOTH);
         
         //wall images
