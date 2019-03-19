@@ -29,6 +29,9 @@ public class Room {
     //true if bounds have been added
     boolean boundsAdded;
     
+    int roomCode;//code associated with the room
+    static int roomsRecorded;//number of rooms recorded
+    
     /**
      * Constructor for room. Width and height
      * along with its ground and wall image are specified
@@ -56,6 +59,10 @@ public class Room {
         leftBound = -MainFrame.blockWidth / 2 - ((width / 2 -
                 (width % 2 == 0 ? 1 : 0)) * MainFrame.blockWidth) - 4;
         rightBound = -leftBound + (width % 2 == 0 ? MainFrame.blockWidth : 0) -7;
+        
+        //give the room its room code
+        //NOTE: roomCode has no use so far
+        roomCode = roomsRecorded++;
     }
     
     /**
@@ -139,6 +146,44 @@ public class Room {
                 if(!Game.focus && !boundsAdded && d.open){
                     boundsAdded = true;
                     addBounds(0, -1);
+                }
+                
+                //if the player has walked through the door, switch to outside
+                switch(d.roomSide){
+                    case 0://if the room is on the north side of the room
+                        if(!Game.focus && d.open && Player.coordY < d.y){
+                            Player.setDirection(0);
+                            Land.inside = false;
+                            d.open = false;
+                            Game.focus = true;
+                            d.img = d.anim;
+                            
+                            /*take the roomCode and transform it into the appropriate building array
+                            index. This is done by subtracting every building array length from every
+                            section prior to the current section.*/
+                            int buildingIndex = roomCode;
+                            if(Player.curIdX > 0){
+                                for(int i = 0; i < Player.curIdX; i++){
+                                    for(int j = 0; j < Player.curIdY; j++){
+                                        buildingIndex -= Land.curArea.sections[i][j].buildings.length;
+                                    }
+                                }
+                            } else if(Player.curIdY > 0){
+                                for(int i = 0; i < Player.curIdY; i++){
+                                    for(int j = 0; j < Player.curIdX; j++){
+                                        buildingIndex -= Land.curArea.sections[j][i].buildings.length;
+                                    }
+                                }
+                            }
+                            
+                            Player.dx = 
+                                    Land.curArea.sections[Player.curIdX][Player.curIdY].buildings[
+                                    buildingIndex].entry.x - Player.x;
+                            Player.dy =
+                                    Land.curArea.sections[Player.curIdX][Player.curIdY].buildings[
+                                    buildingIndex].entry.y - Player.y + MainFrame.blockHeight * 2;
+                        }
+                        break;
                 }
                 
                 d.animate();

@@ -34,6 +34,11 @@ public class Door {
     //determines which side of the room the door is on (only applicable to rooms)
     int roomSide;
     
+    //the room number that the door is associated with; used for outside doors
+    int roomCode;
+    
+    boolean leadsOutside;//true if the door leads outside
+    
     /**
      * Constructor for door.
      * @param openable is true
@@ -154,5 +159,23 @@ public class Door {
         }
         
         this.img = anim;
+    }
+    
+    /**
+     * Sets the room code that the door is associated with.
+     * This is used with doors on the outside
+     */
+    void setRoomCode(int roomCode){
+        this.roomCode = roomCode;
+    }
+    
+    /**
+     * Makes the door the door that leads the player
+     * outside. When the player comes inside, they
+     * come through this door. This is used with
+     * doors on the inside.
+     */
+    void setOutsideDoor(boolean val){
+        leadsOutside = val;
     }
 }

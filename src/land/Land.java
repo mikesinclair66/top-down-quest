@@ -34,6 +34,7 @@ public class Land {
         rooms[0][0] = new Room(10, 10, ImageCenter.ground_stone, ImageCenter.wall_wood);
         d = new Door(true);
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        d.setOutsideDoor(true);
         rooms[0][0].addDoor(d, 0, 3);
         rooms[0][0].addObstacle(new Obstacle(7, 7, 2, 2, ImageCenter.wall_wood));
         rooms[0][0].addObstacle(new Computer(10, 0));
@@ -51,6 +52,7 @@ public class Land {
         areas[0].addBuilding(new Building(9, 5, 4, 3, 3), 0, 0);
         d = new Door(true);
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        d.setRoomCode(0);
         areas[0].sections[0][0].buildings[0].addDoor(d, 1);
         curArea = areas[0];
     }
@@ -60,5 +62,17 @@ public class Land {
             curRoom.update();
         else
             curArea.update();
+    }
+    
+    /**
+     * Sets the room to the specified room number.
+     */
+    static void setRoom(int roomNo) throws IllegalArgumentException {
+        try{
+            curRoom = rooms[0][roomNo];
+        } catch(ArrayIndexOutOfBoundsException e){
+            System.err.println("Error: the room was set with an illegal room no.");
+            throw new IllegalArgumentException();
+        }
     }
 }

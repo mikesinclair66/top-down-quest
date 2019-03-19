@@ -20,6 +20,8 @@ public class Building extends Obstacle {
     public Building(int x, int y, int width, int height, int length){
         super(x, y, width, height, ImageCenter.wall_wood);
         roofImg = ImageCenter.ground_stone;
+        this.length = length;
+        oHeight += length * MainFrame.blockHeight;//add the roof to the boundaries
     }
     
     public void addDoor(Door d, int x){
@@ -55,13 +57,22 @@ public class Building extends Obstacle {
         else if(Player.coordY <= oy + oHeight - MainFrame.blockHeight){
             //send the player to the door's associated room
             Land.inside = true;
-            //TODO send player to room using door code?
+            Land.setRoom(entry.roomCode);
             
             //reset settings as player goes inside
             Player.setDirection(0);
             Game.focus = true;
-            Player.dx = 0;
-            Player.dy = 0;
+            entry.img = entry.anim;
+            //find the door that leads outside, and put the player in front of it
+            for(Door d : Land.curRoom.doors)
+                if(d.leadsOutside){
+                    //if the door is on the north side of the room
+                    if(d.roomSide == 0){
+                        Player.dx = -Player.x + d.x;
+                        Player.dy = -Player.y + d.y + MainFrame.blockHeight * 2;
+                    }
+                    break;//since there can only be one door leading outside, end the loop
+                }
             entry.open = false;
         }
     }
