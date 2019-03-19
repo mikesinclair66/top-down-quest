@@ -10,6 +10,17 @@ public class Section {
     
     Image groundImg;
     
+    Building[] buildings = new Building[0];
+    
+    void addBuilding(Building b){
+        //increase the buildings array's size by 1
+        Building[] temp = new Building[buildings.length + 1];
+        System.arraycopy(buildings, 0, temp, 0, buildings.length);
+        buildings = temp;
+        
+        buildings[buildings.length - 1] = b;
+    }
+    
     public void draw(Graphics2D comp){
         for(int i = 0; i < MainFrame.DIMENSIONX; i++){
             for(int j = 0; j < MainFrame.DIMENSIONY; j++){
@@ -17,6 +28,9 @@ public class Section {
                         j * MainFrame.blockHeight - Player.dy, null);
             }
         }
+        
+        for(Building b : buildings)
+            b.draw(comp);
     }
     
     /**
@@ -36,7 +50,8 @@ public class Section {
     }
     
     public void update(){
-        
+        for(Building b : buildings)
+            b.update();
     }
     
     void setGroundImage(Image img){

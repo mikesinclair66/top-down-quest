@@ -109,7 +109,7 @@ public class Room {
         o.ox += begX * MainFrame.blockWidth;
         o.oy += begY * MainFrame.blockHeight;
         
-        //increase the doors array's size by 1
+        //increase the obstacles array's size by 1
         Obstacle[] temp = new Obstacle[obs.length + 1];
         System.arraycopy(obs, 0, temp, 0, obs.length);
         obs = temp;

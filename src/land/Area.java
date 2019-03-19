@@ -9,6 +9,8 @@ public class Area {
     Section[][] sections;
     int areaX, areaY;//dimension sizes of the sections array
     int curIdX, curIdY;//indicates which section the player is in
+    //if there is a section around the current section in the area
+    boolean sectionUp, sectionRight, sectionDown, sectionLeft;
     
     public Area(int areaX, int areaY){
         this.areaX = areaX;
@@ -17,30 +19,57 @@ public class Area {
         initSections();
     }
     
+    /**
+     * Adds a building to the specified section.
+     */
+    void addBuilding(Building b, int secX, int secY){
+        sections[secX][secY].addBuilding(b);
+    }
+    
     void draw(Graphics2D comp){
+        //draw the current section and its surrounding sections
         sections[curIdX][curIdY].draw(comp);
-        
-        //draw the sections around the current section if possible
-        //true if there is available area around the current section
-        boolean up = curIdY > 0;
-        boolean right = curIdX < areaX - 1;
-        boolean down = curIdY < areaY - 1;
-        boolean left = curIdX > 0;
-        
-        if(up)
+        if(sectionUp)
             sections[curIdX][curIdY - 1].draw(comp, 0, -1);
-        if(right)
+        if(sectionRight)
             sections[curIdX + 1][curIdY].draw(comp, 1, 0);
-        if(down)
+        if(sectionDown)
             sections[curIdX][curIdY + 1].draw(comp, 0, 1);
-        if(left)
+        if(sectionLeft)
             sections[curIdX - 1][curIdY].draw(comp, -1, 0);
+        if(sectionUp && sectionLeft)
+            sections[curIdX - 1][curIdY - 1].draw(comp, -1, -1);
+        if(sectionUp && sectionRight)
+            sections[curIdX + 1][curIdY - 1].draw(comp, 1, -1);
+        if(sectionDown && sectionLeft)
+            sections[curIdX - 1][curIdY + 1].draw(comp, -1, 1);
+        if(sectionDown && sectionRight)
+            sections[curIdX + 1][curIdY + 1].draw(comp, 1, 1);
     }
     
     void update(){
+        //update the current section and its surrounding sections
         sections[curIdX][curIdY].update();
-        //NOTE: only the current section is being updated right now
         
+        /*Note: without this code, only the current section is being updated
+        if(sectionUp)
+            sections[curIdX][curIdY - 1].update();
+        if(sectionRight)
+            sections[curIdX + 1][curIdY].update();
+        if(sectionDown)
+            sections[curIdX][curIdY + 1].update();
+        if(sectionLeft)
+            sections[curIdX - 1][curIdY].update();
+        if(sectionUp && sectionLeft)
+            sections[curIdX - 1][curIdY - 1].update();
+        if(sectionUp && sectionRight)
+            sections[curIdX + 1][curIdY - 1].update();
+        if(sectionDown && sectionLeft)
+            sections[curIdX - 1][curIdY + 1].update();
+        if(sectionDown && sectionRight)
+            sections[curIdX + 1][curIdY + 1].update();*/
+        
+        //if the player leaves their section and goes into a new section, switch current section
         if(Player.coordX < 0 && curIdX > 0){
             curIdX--;
             Player.dx = MainFrame.blockWidth * MainFrame.DIMENSIONX
@@ -60,7 +89,15 @@ public class Area {
             curIdY++;
             Player.dy = -Player.y;
         }
-        System.out.println(Player.dx);
+        
+        //true if there is available area around the current section
+        sectionUp = curIdY > 0;
+        sectionRight = curIdX < areaX - 1;
+        sectionDown = curIdY < areaY - 1;
+        sectionLeft = curIdX > 0;
+        
+        Player.curIdX = curIdX;
+        Player.curIdY = curIdY;
     }
     
     /** Initializes the sections array. */

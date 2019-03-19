@@ -2,10 +2,7 @@ package land;
 
 import java.awt.Graphics2D;
 import land.entities.Computer;
-import player.Player;
-import window.Game;
 import window.ImageCenter;
-import window.MainFrame;
 
 public class Land {
     static Room[][] rooms = new Room[1][1];//[area][room]
@@ -32,15 +29,13 @@ public class Land {
      * every room variable.
      */
     public static void initRooms(){
-        Door door;
-        Obstacle o;
+        Door d;
         
         rooms[0][0] = new Room(10, 10, ImageCenter.ground_stone, ImageCenter.wall_wood);
-        door = new Door(true);
-        door.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        rooms[0][0].addDoor(door, 0, 3);
-        o = new Obstacle(7, 7, 2, 2, ImageCenter.wall_wood);
-        rooms[0][0].addObstacle(o);
+        d = new Door(true);
+        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        rooms[0][0].addDoor(d, 0, 3);
+        rooms[0][0].addObstacle(new Obstacle(7, 7, 2, 2, ImageCenter.wall_wood));
         rooms[0][0].addObstacle(new Computer(10, 0));
         
         curRoom = rooms[0][0];
@@ -50,7 +45,13 @@ public class Land {
      * This function initializes every area variable.
      */
     public static void initAreas(){
-        areas[0] = new Area(3, 3);
+        Door d;
+        
+        areas[0] = new Area(4, 4);
+        areas[0].addBuilding(new Building(9, 5, 4, 3, 3), 0, 0);
+        d = new Door(true);
+        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        areas[0].sections[0][0].buildings[0].addDoor(d, 1);
         curArea = areas[0];
     }
     

@@ -20,6 +20,8 @@ public class Player {
     
     static Image img;
     
+    public static int curIdX, curIdY;//indicates which section the player is in within their area
+    
     public static void draw(Graphics2D comp){
         comp.drawImage(img, x, y, null);
     }
