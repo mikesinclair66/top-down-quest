@@ -12,11 +12,16 @@ public class Area {
     //if there is a section around the current section in the area
     boolean sectionUp, sectionRight, sectionDown, sectionLeft;
     
+    int areaNo;
+    static int areasRecorded;
+    
     public Area(int areaX, int areaY){
         this.areaX = areaX;
         this.areaY = areaY;
         sections = new Section[areaX][areaY];
         initSections();
+        
+        areaNo = areasRecorded++;
     }
     
     /**
