@@ -17,6 +17,9 @@ public class Building extends Obstacle {
     
     Door entry;
     
+    int secX, secY;
+    int buildingNo;//number of buildings
+    
     public Building(int x, int y, int width, int height, int length){
         super(x, y, width, height, ImageCenter.wall_wood);
         roofImg = ImageCenter.ground_stone;
@@ -56,8 +59,8 @@ public class Building extends Obstacle {
         //if the door is open and there's no focus, send the player through the door
         else if(Player.coordY <= oy + oHeight - MainFrame.blockHeight){
             //send the player to the door's associated room
+            Land.setRoom(Land.curArea.curIdX, Land.curArea.curIdY, buildingNo);
             Land.inside = true;
-            Land.setRoom(entry.roomCode);
             
             //reset settings as player goes inside
             Player.setDirection(0);
@@ -84,5 +87,9 @@ public class Building extends Obstacle {
     void setImages(Image wall, Image roof){
         img = wall;
         roofImg = roof;
+    }
+    
+    Building getBuilding(int secX, int secY, int buildingNo){
+        return Land.curArea.sections[secX][secY].buildings[buildingNo];
     }
 }

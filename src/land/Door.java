@@ -35,7 +35,7 @@ public class Door {
     int roomSide;
     
     //the room number that the door is associated with; used for outside doors
-    int roomCode;
+    int roomCodeX, roomCodeY;
     
     boolean leadsOutside;//true if the door leads outside
     
@@ -165,8 +165,9 @@ public class Door {
      * Sets the room code that the door is associated with.
      * This is used with doors on the outside
      */
-    void setRoomCode(int roomCode){
-        this.roomCode = roomCode;
+    void setRoomCode(int roomCodeX, int roomCodeY){
+        this.roomCodeX = roomCodeX;
+        this.roomCodeY = roomCodeY;
     }
     
     /**

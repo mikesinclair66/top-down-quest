@@ -29,8 +29,11 @@ public class Room {
     //true if bounds have been added
     boolean boundsAdded;
     
-    int roomCode;//code associated with the room
+    final int roomCode;//code associated with the room
     static int roomsRecorded;//number of rooms recorded
+    
+    int secX, secY;
+    int secRoomNo;//number of rooms
     
     /**
      * Constructor for room. Width and height
@@ -158,30 +161,7 @@ public class Room {
                             Game.focus = true;
                             d.img = d.anim;
                             
-                            /*take the roomCode and transform it into the appropriate building array
-                            index. This is done by subtracting every building array length from every
-                            section prior to the current section.*/
-                            int buildingIndex = roomCode;
-                            if(Player.curIdX > 0){
-                                for(int i = 0; i < Player.curIdX; i++){
-                                    for(int j = 0; j < Player.curIdY; j++){
-                                        buildingIndex -= Land.curArea.sections[i][j].buildings.length;
-                                    }
-                                }
-                            } else if(Player.curIdY > 0){
-                                for(int i = 0; i < Player.curIdY; i++){
-                                    for(int j = 0; j < Player.curIdX; j++){
-                                        buildingIndex -= Land.curArea.sections[j][i].buildings.length;
-                                    }
-                                }
-                            }
-                            
-                            Player.dx = 
-                                    Land.curArea.sections[Player.curIdX][Player.curIdY].buildings[
-                                    buildingIndex].entry.x - Player.x;
-                            Player.dy =
-                                    Land.curArea.sections[Player.curIdX][Player.curIdY].buildings[
-                                    buildingIndex].entry.y - Player.y + MainFrame.blockHeight * 2;
+                            //TODO put the player in front of the door
                         }
                         break;
                 }
@@ -230,5 +210,19 @@ public class Room {
                 this.leftBound += qty * MainFrame.blockWidth;
                 break;
         }
+    }
+    
+    static Room getRoom(int secX, int secY, int secRoomNo)
+        throws IllegalArgumentException {
+        Room r;
+        for(int i = 0; i < Land.rooms.length; i++){
+            if(Land.rooms[Land.curArea.areaNo][i].secX == secX
+                    && Land.rooms[Land.curArea.areaNo][i].secY == secY
+                    && Land.rooms[Land.curArea.areaNo][i].secRoomNo == secRoomNo)
+                return Land.rooms[Land.curArea.areaNo][i];
+        }
+        
+        //if the for loop doesn't end up returning something, throw exception
+        throw new IllegalArgumentException();
     }
 }

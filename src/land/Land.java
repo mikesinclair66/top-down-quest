@@ -117,12 +117,7 @@ public class Land {
     /**
      * Sets the room to the specified room number.
      */
-    static void setRoom(int roomNo) throws IllegalArgumentException {
-        try{
-            curRoom = rooms[0][roomNo];
-        } catch(ArrayIndexOutOfBoundsException e){
-            System.err.println("Error: the room was set with an illegal room no.");
-            throw new IllegalArgumentException();
-        }
+    static void setRoom(int secX, int secY, int secRoomNo) {
+        curRoom = Room.getRoom(secX, secY, secRoomNo);
     }
 }

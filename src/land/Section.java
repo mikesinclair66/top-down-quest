@@ -12,13 +12,21 @@ public class Section {
     
     Building[] buildings = new Building[0];
     
-    void addBuilding(Building b){
+    void addBuilding(Building b, int secX, int secY){
         //increase the buildings array's size by 1
         Building[] temp = new Building[buildings.length + 1];
         System.arraycopy(buildings, 0, temp, 0, buildings.length);
         buildings = temp;
         
+        b.secX = secX;
+        b.secY = secY;
+        
         buildings[buildings.length - 1] = b;
+        buildings[buildings.length - 1].buildingNo = buildings.length;
+        Land.rooms[Land.curArea.areaNo][buildings.length - 1].secX = secX;
+        Land.rooms[Land.curArea.areaNo][buildings.length - 1].secY = secY;
+        Land.rooms[Land.curArea.areaNo][buildings.length - 1].secRoomNo = buildings.length;
+        System.out.println(buildings.length);
     }
     
     public void draw(Graphics2D comp){

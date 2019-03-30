@@ -28,7 +28,7 @@ public class Area {
      * Adds a building to the specified section.
      */
     void addBuilding(Building b, int secX, int secY){
-        sections[secX][secY].addBuilding(b);
+        sections[secX][secY].addBuilding(b, secX, secY);
     }
     
     void draw(Graphics2D comp){
