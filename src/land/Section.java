@@ -23,10 +23,6 @@ public class Section {
         
         buildings[buildings.length - 1] = b;
         buildings[buildings.length - 1].buildingNo = buildings.length;
-        Land.rooms[Land.curArea.areaNo][buildings.length - 1].secX = secX;
-        Land.rooms[Land.curArea.areaNo][buildings.length - 1].secY = secY;
-        Land.rooms[Land.curArea.areaNo][buildings.length - 1].secRoomNo = buildings.length;
-        System.out.println(buildings.length);
     }
     
     public void draw(Graphics2D comp){

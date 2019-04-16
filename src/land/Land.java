@@ -1,7 +1,6 @@
 package land;
 
 import java.awt.Graphics2D;
-import land.entities.Computer;
 import window.ImageCenter;
 
 public class Land {
@@ -30,40 +29,6 @@ public class Land {
      */
     public static void initRooms(){
         Door d;
-        
-        rooms[0][0] = new Room(10, 10, ImageCenter.ground_stone, ImageCenter.wall_wood);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        d.setOutsideDoor(true);
-        rooms[0][0].addDoor(d, 0, 3);
-        
-        rooms[0][1] = new Room(4, 4, ImageCenter.ground_stone, ImageCenter.wall_wood);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        d.setOutsideDoor(true);
-        rooms[0][1].addDoor(d, 0, 0);
-        
-        rooms[0][2] = new Room(25, 10, ImageCenter.ground_stone, ImageCenter.wall_wood);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        d.setOutsideDoor(true);
-        rooms[0][2].addDoor(d, 0, 3);
-        
-        rooms[0][3] = new Room(10, 10, ImageCenter.ground_stone, ImageCenter.wall_wood);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        d.setOutsideDoor(true);
-        rooms[0][3].addDoor(d, 0, 3);
-        rooms[0][3].addObstacle(new Obstacle(9, 0, 1, 10, ImageCenter.wall_wood));
-        
-        rooms[0][4] = new Room(10, 10, ImageCenter.ground_grass, ImageCenter.wall_wood);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        d.setOutsideDoor(true);
-        rooms[0][4].addDoor(d, 0, 3);
-        
-        
-        curRoom = rooms[0][0];
     }
     
     /**
@@ -74,6 +39,7 @@ public class Land {
         Door d;
         
         areas[0] = new Area(3, 3);
+        curArea = areas[0];
         b = new Building(0, 0, 5, 3, 3);
         d = new Door(true);
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
@@ -103,8 +69,6 @@ public class Land {
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
         b.addDoor(d, 2);
         areas[0].addBuilding(b, 2, 0);
-        
-        curArea = areas[0];
     }
     
     public static void update(){
@@ -112,12 +76,5 @@ public class Land {
             curRoom.update();
         else
             curArea.update();
-    }
-    
-    /**
-     * Sets the room to the specified room number.
-     */
-    static void setRoom(int secX, int secY, int secRoomNo) {
-        curRoom = Room.getRoom(secX, secY, secRoomNo);
     }
 }

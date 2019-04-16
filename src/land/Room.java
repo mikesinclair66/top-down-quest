@@ -2,7 +2,6 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import land.entities.Computer;
 import player.Player;
 import window.Game;
 import window.MainFrame;
@@ -28,12 +27,6 @@ public class Room {
     
     //true if bounds have been added
     boolean boundsAdded;
-    
-    final int roomCode;//code associated with the room
-    static int roomsRecorded;//number of rooms recorded
-    
-    int secX, secY;
-    int secRoomNo;//number of rooms
     
     /**
      * Constructor for room. Width and height
@@ -62,10 +55,6 @@ public class Room {
         leftBound = -MainFrame.blockWidth / 2 - ((width / 2 -
                 (width % 2 == 0 ? 1 : 0)) * MainFrame.blockWidth) - 4;
         rightBound = -leftBound + (width % 2 == 0 ? MainFrame.blockWidth : 0) -7;
-        
-        //give the room its room code
-        //NOTE: roomCode has no use so far
-        roomCode = roomsRecorded++;
     }
     
     /**
@@ -210,19 +199,5 @@ public class Room {
                 this.leftBound += qty * MainFrame.blockWidth;
                 break;
         }
-    }
-    
-    static Room getRoom(int secX, int secY, int secRoomNo)
-        throws IllegalArgumentException {
-        Room r;
-        for(int i = 0; i < Land.rooms.length; i++){
-            if(Land.rooms[Land.curArea.areaNo][i].secX == secX
-                    && Land.rooms[Land.curArea.areaNo][i].secY == secY
-                    && Land.rooms[Land.curArea.areaNo][i].secRoomNo == secRoomNo)
-                return Land.rooms[Land.curArea.areaNo][i];
-        }
-        
-        //if the for loop doesn't end up returning something, throw exception
-        throw new IllegalArgumentException();
     }
 }
