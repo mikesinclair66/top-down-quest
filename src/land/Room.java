@@ -141,19 +141,20 @@ public class Room {
                 }
                 
                 //if the player has walked through the door, switch to outside
-                switch(d.roomSide){
-                    case 0://if the room is on the north side of the room
-                        if(!Game.focus && d.open && Player.coordY < d.y){
-                            Player.setDirection(0);
-                            Land.inside = false;
-                            d.open = false;
-                            Game.focus = true;
-                            d.img = d.anim;
-                            
-                            //TODO put the player in front of the door
-                        }
-                        break;
-                }
+                if(d.leadsOutside)
+                    switch(d.roomSide){
+                        case 0://if the room is on the north side of the room
+                            if(!Game.focus && d.open && Player.coordY < d.y){
+                                Player.setDirection(0);
+                                Land.inside = false;
+                                d.open = false;
+                                Game.focus = true;
+                                d.img = d.anim;
+
+                                //TODO put the player in front of the door
+                            }
+                            break;
+                    }
                 
                 d.animate();
             }

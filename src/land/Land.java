@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import window.ImageCenter;
 
 public class Land {
-    static Room[][] rooms = new Room[1][5];//[area][room]
     static Area[] areas = new Area[1];//[city/big area of land]
     
     static Area curArea;//the area that the player is currently in
@@ -24,19 +23,12 @@ public class Land {
     }
     
     /**
-     * This function initializes
-     * every room variable.
-     */
-    public static void initRooms(){
-        Door d;
-    }
-    
-    /**
      * This function initializes every area variable.
      */
     public static void initAreas(){
         Building b;
         Door d;
+        Room r;
         
         areas[0] = new Area(3, 3);
         curArea = areas[0];
@@ -44,6 +36,13 @@ public class Land {
         d = new Door(true);
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
         b.addDoor(d, 2);
+        //set the building's room
+        r = new Room(5, 5, ImageCenter.ground_stone, ImageCenter.wall_wood);
+        d = new Door(true);
+        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        d.setOutsideDoor(true);
+        r.addDoor(d, 0, 3);
+        b.setRoom(r);
         areas[0].addBuilding(b, 0, 0);
         
         b = new Building(10, 2, 5, 4, 3);
