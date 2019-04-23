@@ -175,6 +175,8 @@ public class Door {
      * outside. When the player comes inside, they
      * come through this door. This is used with
      * doors on the inside.
+     * Note: this function should only be used
+     * on doors inside of rooms
      */
     void setOutsideDoor(boolean val){
         leadsOutside = val;

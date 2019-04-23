@@ -96,6 +96,7 @@ public class Building extends Obstacle {
      * is connected to.
      */
     void setRoom(Room r){
+        r.b = this;
         room = r;
     }
     

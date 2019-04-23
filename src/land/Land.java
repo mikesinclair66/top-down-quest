@@ -32,42 +32,42 @@ public class Land {
         
         areas[0] = new Area(3, 3);
         curArea = areas[0];
-        b = new Building(0, 0, 5, 3, 3);
+        
+        b = new Building(0, 0, 3, 3, 3);
         d = new Door(true);
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        b.addDoor(d, 2);
-        //set the building's room
+        b.addDoor(d, 1);
         r = new Room(5, 5, ImageCenter.ground_stone, ImageCenter.wall_wood);
         d = new Door(true);
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
         d.setOutsideDoor(true);
-        r.addDoor(d, 0, 3);
+        r.addDoor(d, 0, 2);
         b.setRoom(r);
         areas[0].addBuilding(b, 0, 0);
         
-        b = new Building(10, 2, 5, 4, 3);
+        b = new Building(11, 5, 5, 3, 2);
         d = new Door(true);
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        b.addDoor(d, 2);
+        b.addDoor(d, 3);
+        r = new Room(10, 10, ImageCenter.ground_stone, ImageCenter.wall_wood);
+        d = new Door(true);
+        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        d.setOutsideDoor(true);
+        r.addDoor(d, 0, 2);
+        b.setRoom(r);
+        areas[0].addBuilding(b, 0, 0);
+        
+        b = new Building(0, 0, 3, 3, 3);
+        d = new Door(true);
+        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        b.addDoor(d, 1);
+        r = new Room(5, 5, ImageCenter.ground_stone, ImageCenter.wall_wood);
+        d = new Door(true);
+        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
+        d.setOutsideDoor(true);
+        r.addDoor(d, 0, 2);
+        b.setRoom(r);
         areas[0].addBuilding(b, 1, 0);
-        
-        b = new Building(2, 2, 3, 3, 2);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        b.addDoor(d, 1);
-        areas[0].addBuilding(b, 0, 1);
-        
-        b = new Building(0, 4, 2, 2, 1);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        b.addDoor(d, 1);
-        areas[0].addBuilding(b, 1, 1);
-        
-        b = new Building(10, 5, 4, 4, 3);
-        d = new Door(true);
-        d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
-        b.addDoor(d, 2);
-        areas[0].addBuilding(b, 2, 0);
     }
     
     public static void update(){

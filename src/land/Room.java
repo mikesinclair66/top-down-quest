@@ -28,6 +28,9 @@ public class Room {
     //true if bounds have been added
     boolean boundsAdded;
     
+    //building that the room is connected to
+    Building b;
+    
     /**
      * Constructor for room. Width and height
      * along with its ground and wall image are specified
@@ -151,7 +154,8 @@ public class Room {
                                 Game.focus = true;
                                 d.img = d.anim;
 
-                                //TODO put the player in front of the door
+                                Player.dx = b.entry.x - Player.x;
+                                Player.dy = b.entry.y - Player.y + MainFrame.blockHeight * 2;
                             }
                             break;
                     }
