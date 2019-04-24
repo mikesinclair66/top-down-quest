@@ -40,8 +40,7 @@ public class Animation {
      * current animation.
      */
     public Image getAnim(){
-        if(dir == 3) return down[0];//TODO delete this
-        else return anim;
+        return anim;
     }
     
     /** Sets anim based on the object's direction. */
@@ -106,6 +105,7 @@ public class Animation {
                     break;
                 case 3:
                     left[i] = imgs[i];
+                    break;
             }
     }
     

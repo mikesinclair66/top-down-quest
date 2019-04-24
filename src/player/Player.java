@@ -33,13 +33,14 @@ public class Player {
         setCoords(MainFrame.width / 2 - MainFrame.blockWidth / 2,
                 MainFrame.height / 2 - MainFrame.blockHeight / 2);
         anim = new Animation(8);
-        //TODO set anim.setImages() for all directions
         anim.setImages(0, ImageCenter.up0, ImageCenter.up1, ImageCenter.up2, ImageCenter.up1, ImageCenter.up0,
                 ImageCenter.up3, ImageCenter.up4, ImageCenter.up3);
         anim.setImages(1, ImageCenter.right0, ImageCenter.right1, ImageCenter.right2, ImageCenter.right1,
                 ImageCenter.right0, ImageCenter.right3, ImageCenter.right4, ImageCenter.right3);
         anim.setImages(2, ImageCenter.down0, ImageCenter.down1, ImageCenter.down2, ImageCenter.down1, ImageCenter.down0,
                 ImageCenter.down3, ImageCenter.down4, ImageCenter.down3);
+        anim.setImages(3, ImageCenter.left0, ImageCenter.left1, ImageCenter.left2, ImageCenter.left1,
+                ImageCenter.left0, ImageCenter.left3, ImageCenter.left4, ImageCenter.left3);
     }
     
     static void setCoords(int x, int y){
