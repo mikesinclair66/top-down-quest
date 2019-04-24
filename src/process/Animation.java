@@ -14,12 +14,16 @@ public class Animation {
     int dir;//the direction being used
     
     private int animNo;//how many animations each direction has
-    boolean animating;//if true, time is incremented every update()
+    public boolean animating;//if true, time is incremented every update()
     //time is incremented every update() if animating == true, and the animation changes when time == maxTime
-    int time, maxTime = 50;//maxTime's default is 50, but it can be changed
+    int time, maxTime = 4;//maxTime's default is 50, but it can be changed
     int animSeq;//the animation that the image is currently on. Goes from 0 - (animNo - 1)
     
     public Animation(int animNo){
+        up = new Image[animNo];
+        right = new Image[animNo];
+        down = new Image[animNo];
+        left = new Image[animNo];
         this.animNo = animNo;
     }
     
@@ -27,8 +31,17 @@ public class Animation {
      * Stops or starts animation process
      * based on boolean value.
      */
-    void keepAnimating(boolean val){
+    public void keepAnimating(boolean val){
         animating = val;
+    }
+    
+    /**
+     * Gets the image for the object's
+     * current animation.
+     */
+    public Image getAnim(){
+        if(dir == 3) return down[0];//TODO delete this
+        else return anim;
     }
     
     /** Sets anim based on the object's direction. */
@@ -53,21 +66,23 @@ public class Animation {
      * Sets the direction of the
      * object to be animated.
      */
-    void setDirection(int dir){
-        this.dir = dir;
+    public void setDirection(int dir){
+        if(dir != this.dir){
+            this.dir = dir;
         
-        setAnim(0);
-        
-        time = 0;
-        animSeq = 0;
+            setAnim(0);
+
+            time = 0;
+            animSeq = 0;
+        }
     }
     
     /**
      * Sets the animations for the specified
      * direction of the object.
      */
-    void setImages(int dir, String ... path) throws IllegalArgumentException {
-        if(path.length != animNo){
+    public void setImages(int dir, Image ... imgs) throws IllegalArgumentException {
+        if(imgs.length != animNo){
             System.err.println("Error: setImages() requires the same amount of paths"
                     + " as the number specified in the Animation object's constructor");
             throw new IllegalArgumentException();
@@ -79,16 +94,18 @@ public class Animation {
         for(int i = 0; i < animNo; i++)
             switch(dir){
                 case 0:
-                    up[i] = (new ImageIcon(path[i])).getImage();
+                    up[i] = imgs[i];
                     break;
                 case 1:
-                    right[i] = (new ImageIcon(path[i])).getImage();
+                    right[i] = imgs[i];
                     break;
                 case 2:
-                    down[i] = (new ImageIcon(path[i])).getImage();
+                    down[i] = imgs[i];
+                    if(i == 0)
+                        anim = down[0];//once the down image is set, make it the object's default
                     break;
                 case 3:
-                    left[i] = (new ImageIcon(path[i])).getImage();
+                    left[i] = imgs[i];
             }
     }
     
@@ -100,7 +117,7 @@ public class Animation {
         this.maxTime = maxTime;
     }
     
-    void update(){
+    public void update(){
         if(animating){
             time++;
             

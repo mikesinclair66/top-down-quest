@@ -3,6 +3,7 @@ package player;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import process.Animation;
 import window.ImageCenter;
 import window.MainFrame;
 
@@ -19,6 +20,7 @@ public class Player {
     public static boolean interact;
     
     static Image img;
+    static Animation anim;
     
     public static int curIdX, curIdY;//indicates which section the player is in within their area
     
@@ -30,6 +32,14 @@ public class Player {
         img = ImageCenter.down0;
         setCoords(MainFrame.width / 2 - MainFrame.blockWidth / 2,
                 MainFrame.height / 2 - MainFrame.blockHeight / 2);
+        anim = new Animation(8);
+        //TODO set anim.setImages() for all directions
+        anim.setImages(0, ImageCenter.up0, ImageCenter.up1, ImageCenter.up2, ImageCenter.up1, ImageCenter.up0,
+                ImageCenter.up3, ImageCenter.up4, ImageCenter.up3);
+        anim.setImages(1, ImageCenter.right0, ImageCenter.right1, ImageCenter.right2, ImageCenter.right1,
+                ImageCenter.right0, ImageCenter.right3, ImageCenter.right4, ImageCenter.right3);
+        anim.setImages(2, ImageCenter.down0, ImageCenter.down1, ImageCenter.down2, ImageCenter.down1, ImageCenter.down0,
+                ImageCenter.down3, ImageCenter.down4, ImageCenter.down3);
     }
     
     static void setCoords(int x, int y){
@@ -151,6 +161,24 @@ public class Player {
         
         coordX = x + dx;
         coordY = y + dy;
+        
+        //animate the player
+        if(!anim.animating && (up || right || down || left))
+            anim.keepAnimating(true);
+        else if(anim.animating && !up && !right && !down && !left)
+            anim.keepAnimating(false);
+        
+        if(up && !down)
+            anim.setDirection(0);
+        else if(right && !up && !down && !left)
+            anim.setDirection(1);
+        else if(down && !up)
+            anim.setDirection(2);
+        else if(left && !up && !right && !down)
+            anim.setDirection(3);
+        
+        anim.update();
+        img = anim.getAnim();
     }
     
     /**

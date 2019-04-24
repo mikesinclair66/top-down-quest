@@ -5,21 +5,21 @@ import javax.swing.ImageIcon;
 
 public class ImageCenter{
     //player (without clothes/armor)
-    public static Image up0 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image up1 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image up2 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image up3 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image up4 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image right0 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image right1 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image right2 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image right3 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image right4 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image up0 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\up0.png").getImage();
+    public static Image up1 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\up1.png").getImage();
+    public static Image up2 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\up2.png").getImage();
+    public static Image up3 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\up3.png").getImage();
+    public static Image up4 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\up4.png").getImage();
+    public static Image right0 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\right0.png").getImage();
+    public static Image right1 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\right1.png").getImage();
+    public static Image right2 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\right2.png").getImage();
+    public static Image right3 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\right3.png").getImage();
+    public static Image right4 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\right4.png").getImage();
     public static Image down0 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image down1 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image down2 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image down3 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
-    public static Image down4 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
+    public static Image down1 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down1.png").getImage();
+    public static Image down2 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down2.png").getImage();
+    public static Image down3 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down3.png").getImage();
+    public static Image down4 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down4.png").getImage();
     public static Image left0 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
     public static Image left1 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
     public static Image left2 = new ImageIcon("C:\\Users\\michael66\\Documents\\NetBeansProjects\\Top Down Quest\\images\\down0.png").getImage();
