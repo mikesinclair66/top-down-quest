@@ -61,6 +61,7 @@ public class Building extends Obstacle {
         //if the door is open and there's no focus, send the player through the door
         else if(Player.coordY <= oy + oHeight - MainFrame.blockHeight){
             //send the player to the door's associated room
+            entry.animation.resetAnim();
             Land.curRoom = room;
             Land.inside = true;
             

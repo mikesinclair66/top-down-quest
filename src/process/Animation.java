@@ -13,11 +13,13 @@ public class Animation {
     Image anim;//the current animation being used
     int dir;//the direction being used
     
-    private int animNo;//how many animations each direction has
+    public int animNo;//how many animations each direction has
     public boolean animating;//if true, time is incremented every update()
     //time is incremented every update() if animating == true, and the animation changes when time == maxTime
     int time, maxTime = 4;//maxTime's default is 50, but it can be changed
-    int animSeq;//the animation that the image is currently on. Goes from 0 - (animNo - 1)
+    public int animSeq;//the animation that the image is currently on. Goes from 0 - (animNo - 1)
+    
+    public int cycles;//the amount of cycles the animation has gone through
     
     public Animation(int animNo){
         up = new Image[animNo];
@@ -77,6 +79,23 @@ public class Animation {
     }
     
     /**
+     * Resets the animation variables.
+     */
+    public void resetAnim(){
+        setAnim(0);
+        time = 0;
+        animSeq = 0;
+    }
+    
+    /**
+     * Sets the object's image to the
+     * specified image.
+     */
+    public void setImage(Image img){
+        anim = img;
+    }
+    
+    /**
      * Sets the animations for the specified
      * direction of the object.
      */
@@ -101,7 +120,7 @@ public class Animation {
                 case 2:
                     down[i] = imgs[i];
                     if(i == 0)
-                        anim = down[0];//once the down image is set, make it the object's default
+                        anim = down[0];//once the down image is set, make it the object's default if the default isn't set
                     break;
                 case 3:
                     left[i] = imgs[i];
@@ -113,7 +132,7 @@ public class Animation {
      * changes the maxTime that time has to
      * increment to each update()
      */
-    void setTime(int maxTime){
+    public void setTime(int maxTime){
         this.maxTime = maxTime;
     }
     
@@ -124,8 +143,10 @@ public class Animation {
             if(time == maxTime){
                 time = 0;
                 animSeq++;
-                if(animSeq >= animNo)
+                if(animSeq >= animNo){
                     animSeq = 0;
+                    cycles++;
+                }
                 
                 setAnim(animSeq);
             }

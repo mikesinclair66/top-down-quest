@@ -148,14 +148,7 @@ public class Room {
                     switch(d.roomSide){
                         case 0://if the room is on the north side of the room
                             if(!Game.focus && d.open && Player.coordY < d.y){
-                                Player.setDirection(0);
-                                Land.inside = false;
-                                d.open = false;
-                                Game.focus = true;
-                                d.img = d.anim;
-
-                                Player.dx = b.entry.x - Player.x;
-                                Player.dy = b.entry.y - Player.y + MainFrame.blockHeight * 2;
+                                moveOutside(d);
                             }
                             break;
                     }
@@ -163,6 +156,22 @@ public class Room {
                 d.animate();
             }
         }
+    }
+    
+    /**
+     * Moves the player outside.
+     * @param comp 
+     */
+    private void moveOutside(Door d){
+        Player.setDirection(0);
+        Land.inside = false;
+        d.open = false;
+        Game.focus = true;
+        d.img = d.anim;
+
+        Player.dx = b.entry.x - Player.x;
+        Player.dy = b.entry.y - Player.y + MainFrame.blockHeight * 2;
+        d.animation.resetAnim();
     }
     
     public void draw(Graphics2D comp){
