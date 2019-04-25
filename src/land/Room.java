@@ -2,7 +2,7 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import player.Player;
+import characters.Player;
 import window.Game;
 import window.MainFrame;
 
@@ -149,6 +149,7 @@ public class Room {
                         case 0://if the room is on the north side of the room
                             if(!Game.focus && d.open && Player.coordY < d.y){
                                 moveOutside(d);
+                                Player.anim.setDirection(2);
                             }
                             break;
                     }
@@ -167,7 +168,6 @@ public class Room {
         Land.inside = false;
         d.open = false;
         Game.focus = true;
-        d.img = d.anim;
 
         Player.dx = b.entry.x - Player.x;
         Player.dy = b.entry.y - Player.y + MainFrame.blockHeight * 2;

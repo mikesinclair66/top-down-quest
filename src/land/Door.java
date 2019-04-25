@@ -3,7 +3,7 @@ package land;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import player.Player;
+import characters.Player;
 import process.Animation;
 import window.Game;
 import window.MainFrame;
@@ -48,7 +48,7 @@ public class Door {
         this.openable = openable;
         if(openable){
             animation = new Animation(3);
-            animation.setTime(20);
+            animation.setTime(8);
         }
     }
     

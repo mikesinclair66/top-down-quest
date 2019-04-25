@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import land.Obstacle;
-import player.Player;
+import characters.Player;
 import window.Game;
 import window.ImageCenter;
 import window.MainFrame;

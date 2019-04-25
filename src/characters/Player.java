@@ -1,4 +1,4 @@
-package player;
+package characters;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -20,7 +20,7 @@ public class Player {
     public static boolean interact;
     
     static Image img;
-    static Animation anim;
+    public static Animation anim;
     
     public static int curIdX, curIdY;//indicates which section the player is in within their area
     

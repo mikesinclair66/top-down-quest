@@ -2,7 +2,7 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import player.Player;
+import characters.Player;
 import window.Game;
 import window.ImageCenter;
 import window.MainFrame;
@@ -68,7 +68,6 @@ public class Building extends Obstacle {
             //reset settings as player goes inside
             Player.setDirection(0);
             Game.focus = true;
-            entry.img = entry.anim;
             //find the door that leads outside, and put the player in front of it
             for(Door d : Land.curRoom.doors)
                 if(d.leadsOutside){
@@ -76,6 +75,7 @@ public class Building extends Obstacle {
                     if(d.roomSide == 0){
                         Player.dx = -Player.x + d.x;
                         Player.dy = -Player.y + d.y + MainFrame.blockHeight * 2;
+                        Player.anim.setDirection(2);
                     }
                     break;//since there can only be one door leading outside, end the loop
                 }

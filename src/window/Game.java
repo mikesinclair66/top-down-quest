@@ -1,7 +1,7 @@
 package window;
 
 import land.Land;
-import player.Player;
+import characters.Player;
 
 public class Game {
     static boolean inGame = true;
