@@ -2,6 +2,7 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import characters.Person;
 import characters.Player;
 import window.Game;
 import window.MainFrame;
@@ -24,6 +25,7 @@ public class Room {
     
     Door[] doors = new Door[0];
     Obstacle[] obs = new Obstacle[0];
+    Person[] people = new Person[0];
     
     //true if bounds have been added
     boolean boundsAdded;
@@ -117,6 +119,17 @@ public class Room {
         obs = temp;
         
         obs[obs.length - 1] = o;
+    }
+    
+    /** This functions adds a person to the room */
+    void addPerson(Person p){
+        p.moveArea(begX, begY);
+        
+        Person[] temp = new Person[people.length + 1];
+        System.arraycopy(people, 0, temp, 0, people.length);
+        people = temp;
+        
+        people[people.length - 1] = p;
     }
     
     public void update(){
