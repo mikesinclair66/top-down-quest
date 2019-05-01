@@ -123,7 +123,7 @@ public class Room {
     
     /** This functions adds a person to the room */
     void addPerson(Person p){
-        p.moveArea(begX, begY);
+        p.moveArea(begX, begY);//changes the person's constructor to move them according to the room
         
         Person[] temp = new Person[people.length + 1];
         System.arraycopy(people, 0, temp, 0, people.length);
