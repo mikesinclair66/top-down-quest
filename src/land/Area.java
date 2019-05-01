@@ -1,7 +1,7 @@
 package land;
 
 import java.awt.Graphics2D;
-import player.Player;
+import characters.Player;
 import window.ImageCenter;
 import window.MainFrame;
 

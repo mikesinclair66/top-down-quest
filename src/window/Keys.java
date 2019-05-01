@@ -3,7 +3,7 @@ package window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import land.entities.Computer;
-import player.Player;
+import characters.Player;
 
 /**
  * This class controls keyboard

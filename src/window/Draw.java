@@ -2,7 +2,7 @@ package window;
 
 import java.awt.Graphics2D;
 import land.Land;
-import player.Player;
+import characters.Player;
 
 /**
  * This class contains all

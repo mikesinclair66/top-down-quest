@@ -13,13 +13,19 @@ public class Animation {
     Image anim;//the current animation being used
     int dir;//the direction being used
     
-    private int animNo;//how many animations each direction has
-    boolean animating;//if true, time is incremented every update()
+    public int animNo;//how many animations each direction has
+    public boolean animating;//if true, time is incremented every update()
     //time is incremented every update() if animating == true, and the animation changes when time == maxTime
-    int time, maxTime = 50;//maxTime's default is 50, but it can be changed
-    int animSeq;//the animation that the image is currently on. Goes from 0 - (animNo - 1)
+    int time, maxTime = 4;//maxTime's default is 50, but it can be changed
+    public int animSeq;//the animation that the image is currently on. Goes from 0 - (animNo - 1)
+    
+    public int cycles;//the amount of cycles the animation has gone through
     
     public Animation(int animNo){
+        up = new Image[animNo];
+        right = new Image[animNo];
+        down = new Image[animNo];
+        left = new Image[animNo];
         this.animNo = animNo;
     }
     
@@ -27,8 +33,16 @@ public class Animation {
      * Stops or starts animation process
      * based on boolean value.
      */
-    void keepAnimating(boolean val){
+    public void keepAnimating(boolean val){
         animating = val;
+    }
+    
+    /**
+     * Gets the image for the object's
+     * current animation.
+     */
+    public Image getAnim(){
+        return anim;
     }
     
     /** Sets anim based on the object's direction. */
@@ -53,21 +67,40 @@ public class Animation {
      * Sets the direction of the
      * object to be animated.
      */
-    void setDirection(int dir){
-        this.dir = dir;
+    public void setDirection(int dir){
+        if(dir != this.dir){
+            this.dir = dir;
         
+            setAnim(0);
+
+            time = 0;
+            animSeq = 0;
+        }
+    }
+    
+    /**
+     * Resets the animation variables.
+     */
+    public void resetAnim(){
         setAnim(0);
-        
         time = 0;
         animSeq = 0;
+    }
+    
+    /**
+     * Sets the object's image to the
+     * specified image.
+     */
+    public void setImage(Image img){
+        anim = img;
     }
     
     /**
      * Sets the animations for the specified
      * direction of the object.
      */
-    void setImages(int dir, String ... path) throws IllegalArgumentException {
-        if(path.length != animNo){
+    public void setImages(int dir, Image ... imgs) throws IllegalArgumentException {
+        if(imgs.length != animNo){
             System.err.println("Error: setImages() requires the same amount of paths"
                     + " as the number specified in the Animation object's constructor");
             throw new IllegalArgumentException();
@@ -79,16 +112,19 @@ public class Animation {
         for(int i = 0; i < animNo; i++)
             switch(dir){
                 case 0:
-                    up[i] = (new ImageIcon(path[i])).getImage();
+                    up[i] = imgs[i];
                     break;
                 case 1:
-                    right[i] = (new ImageIcon(path[i])).getImage();
+                    right[i] = imgs[i];
                     break;
                 case 2:
-                    down[i] = (new ImageIcon(path[i])).getImage();
+                    down[i] = imgs[i];
+                    if(i == 0)
+                        anim = down[0];//once the down image is set, make it the object's default if the default isn't set
                     break;
                 case 3:
-                    left[i] = (new ImageIcon(path[i])).getImage();
+                    left[i] = imgs[i];
+                    break;
             }
     }
     
@@ -96,19 +132,21 @@ public class Animation {
      * changes the maxTime that time has to
      * increment to each update()
      */
-    void setTime(int maxTime){
+    public void setTime(int maxTime){
         this.maxTime = maxTime;
     }
     
-    void update(){
+    public void update(){
         if(animating){
             time++;
             
             if(time == maxTime){
                 time = 0;
                 animSeq++;
-                if(animSeq >= animNo)
+                if(animSeq >= animNo){
                     animSeq = 0;
+                    cycles++;
+                }
                 
                 setAnim(animSeq);
             }

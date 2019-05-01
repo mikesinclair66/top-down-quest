@@ -3,7 +3,8 @@ package land;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import player.Player;
+import characters.Player;
+import process.Animation;
 import window.Game;
 import window.MainFrame;
 
@@ -20,15 +21,10 @@ public class Door {
     opened. In this case, the door has no animation.
     */
     boolean openable;
-    
-    boolean openAnimation;//true if the open animation is taking place
-    boolean closeAnimation;
     boolean open;//true if the door is open
-    int animationCount;//used in animation() to time the animation
     
     int x, y;//these are set by either a room or area object
     
-    Image anim, anim2, anim3;//door animations
     Image img;
     
     //determines which side of the room the door is on (only applicable to rooms)
@@ -39,6 +35,8 @@ public class Door {
     
     boolean leadsOutside;//true if the door leads outside
     
+    Animation animation;
+    
     /**
      * Constructor for door.
      * @param openable is true
@@ -48,6 +46,10 @@ public class Door {
      */
     public Door(boolean openable){
         this.openable = openable;
+        if(openable){
+            animation = new Animation(3);
+            animation.setTime(8);
+        }
     }
     
     public void draw(Graphics2D comp){
@@ -80,40 +82,23 @@ public class Door {
     }
     
     public void animate(){
-        if(!open){
-            if(Player.canInteract(x, y, roomSide)){
-                openAnimation = true;
-                Game.focus = false;
-                Player.setDirection(0);//stop the player
+        if(openable){
+            if(!open){
+                if(Player.canInteract(x, y, roomSide) && !animation.animating){
+                    animation.keepAnimating(true);
+                    Game.focus = false;
+                    Player.setDirection(0);//stop the player
+                }
+            } else {
+                if(!Game.focus)
+                    movePlayerHere();
             }
-        } else {
-            if(!Game.focus)
-                movePlayerHere();
-        }
-        
-        if(openAnimation){
-            animationCount++;
-            
-            if(animationCount == 8)
-                img = anim2;
-            else if(animationCount == 16){
-                img = anim3;
-                animationCount = 0;
-                openAnimation = false;
+
+            animation.update();
+            img = animation.getAnim();
+            if(animation.animSeq == animation.animNo - 1){
                 open = true;
-            }
-        }
-        
-        else if(closeAnimation){
-            animationCount++;
-            
-            if(animationCount == 8)
-                img = anim2;
-            else if(animationCount == 16){
-                img = anim;
-                animationCount = 0;
-                closeAnimation = false;
-                open = false;
+                animation.animating = false;
             }
         }
     }
@@ -139,9 +124,7 @@ public class Door {
             System.err.println("Error: an openable door must have 3 animations.");
             throw new IllegalArgumentException();
         } else 
-            anim = img;
-        
-        this.img = anim;
+            this.img = img;
     }
     
     /**
@@ -153,12 +136,11 @@ public class Door {
             System.err.println("Error: A non-openable door must have only 1 image.");
             throw new IllegalArgumentException();
         } else{
-            anim = img;
-            anim2 = img2;
-            anim3 = img3;
+            animation.setImage(img);
+            animation.setImages(0, img, img2, img3);
         }
         
-        this.img = anim;
+        this.img = img;
     }
     
     /**

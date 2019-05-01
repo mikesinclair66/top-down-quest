@@ -2,7 +2,7 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import player.Player;
+import characters.Player;
 import window.MainFrame;
 
 public class Section {

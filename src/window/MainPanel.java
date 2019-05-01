@@ -12,7 +12,9 @@ import javax.swing.Timer;
  * operations for the program.
  */
 public class MainPanel extends JPanel implements ActionListener {
-    Timer t = new Timer(20, this);
+    static final int UPDATE_TIME = 20;//miliseconds per update
+    public static final int FPS = 1000 / UPDATE_TIME;
+    Timer t = new Timer(UPDATE_TIME, this);
     
     public MainPanel(){
         Game.init();

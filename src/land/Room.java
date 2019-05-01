@@ -2,7 +2,8 @@ package land;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import player.Player;
+import characters.Person;
+import characters.Player;
 import window.Game;
 import window.MainFrame;
 
@@ -24,6 +25,7 @@ public class Room {
     
     Door[] doors = new Door[0];
     Obstacle[] obs = new Obstacle[0];
+    Person[] people = new Person[0];
     
     //true if bounds have been added
     boolean boundsAdded;
@@ -119,6 +121,17 @@ public class Room {
         obs[obs.length - 1] = o;
     }
     
+    /** This functions adds a person to the room */
+    void addPerson(Person p){
+        p.moveArea(begX, begY);//changes the person's constructor to move them according to the room
+        
+        Person[] temp = new Person[people.length + 1];
+        System.arraycopy(people, 0, temp, 0, people.length);
+        people = temp;
+        
+        people[people.length - 1] = p;
+    }
+    
     public void update(){
         if(Land.inside){
             //make sure the player doesn't go past the boundaries
@@ -148,14 +161,8 @@ public class Room {
                     switch(d.roomSide){
                         case 0://if the room is on the north side of the room
                             if(!Game.focus && d.open && Player.coordY < d.y){
-                                Player.setDirection(0);
-                                Land.inside = false;
-                                d.open = false;
-                                Game.focus = true;
-                                d.img = d.anim;
-
-                                Player.dx = b.entry.x - Player.x;
-                                Player.dy = b.entry.y - Player.y + MainFrame.blockHeight * 2;
+                                moveOutside(d);
+                                Player.anim.setDirection(2);
                             }
                             break;
                     }
@@ -163,6 +170,21 @@ public class Room {
                 d.animate();
             }
         }
+    }
+    
+    /**
+     * Moves the player outside.
+     * @param comp 
+     */
+    private void moveOutside(Door d){
+        Player.setDirection(0);
+        Land.inside = false;
+        d.open = false;
+        Game.focus = true;
+
+        Player.dx = b.entry.x - Player.x;
+        Player.dy = b.entry.y - Player.y + MainFrame.blockHeight * 2;
+        d.animation.resetAnim();
     }
     
     public void draw(Graphics2D comp){
