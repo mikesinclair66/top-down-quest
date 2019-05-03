@@ -169,6 +169,9 @@ public class Room {
                 
                 d.animate();
             }
+            
+            for(Person p : people)
+                p.update();
         }
     }
     
@@ -206,6 +209,9 @@ public class Room {
         
         for(Obstacle o : obs)
             o.draw(comp);
+        
+        for(Person p : people)
+            p.draw(comp);
     }
     
     /*  Increases or decreases the boundaries.

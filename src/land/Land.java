@@ -1,6 +1,7 @@
 package land;
 
 import java.awt.Graphics2D;
+import characters.Person;
 import window.ImageCenter;
 
 public class Land {
@@ -29,6 +30,7 @@ public class Land {
         Building b;
         Door d;
         Room r;
+        Person p;
         
         areas[0] = new Area(3, 3);
         curArea = areas[0];
@@ -54,6 +56,8 @@ public class Land {
         d.setImages(ImageCenter.door_brown1, ImageCenter.door_brown2, ImageCenter.door_brown3);
         d.setOutsideDoor(true);
         r.addDoor(d, 0, 2);
+        p = new Person(6, 6, 8, 8);
+        r.addPerson(p);
         b.setRoom(r);
         areas[0].addBuilding(b, 0, 0);
         
