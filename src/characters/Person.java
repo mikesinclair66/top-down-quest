@@ -61,6 +61,7 @@ public class Person {
     
     public void draw(Graphics2D comp){
         comp.drawImage(img, x - Player.dx, y - Player.dy, null);
+        comp.fillRect(x - Player.dx, y - Player.dy, MainFrame.blockWidth, MainFrame.blockHeight);
     }
     
     public void moveArea(int x, int y){
@@ -84,39 +85,49 @@ public class Person {
                 case 0:
                     dx = 0;
                     dy = -speed;
+                    anim.setDirection(0);
                     break;
                 case 1:
                     dx = speed;
                     dy = -speed;
+                    anim.setDirection(0);
                     break;
                 case 2:
                     dx = speed;
                     dy = 0;
+                    anim.setDirection(1);
                     break;
                 case 3:
                     dx = speed;
                     dy = speed;
+                    anim.setDirection(2);
                     break;
                 case 4:
                     dx = 0;
                     dy = speed;
+                    anim.setDirection(2);
                     break;
                 case 5:
                     dx = -speed;
                     dy = speed;
+                    anim.setDirection(2);
                     break;
                 case 6:
                     dx = -speed;
                     dy = 0;
+                    anim.setDirection(3);
                     break;
                 case 7:
                     dx = -speed;
                     dy = -speed;
+                    anim.setDirection(0);
                     break;
             }
+            anim.keepAnimating(true);
         } else{
             dx = 0;
             dy = 0;
+            anim.keepAnimating(false);
         }
     }
     
@@ -177,8 +188,8 @@ public class Person {
         if(casual){
             //make the player wait
             if(!moving && waitTime == 0){
-                //wait time is a random value up to two seconds
-                waitTime = ran.nextInt(MainPanel.FPS * 2 - 1) + 1;
+                //wait time is a random value up to three seconds
+                waitTime = ran.nextInt(MainPanel.FPS * 2) + MainPanel.FPS + 1;
                 chooseCasualPath();//set the path that the person will walk after waiting
                 distanceToPath = 0;//reset distanceToPath
             }
@@ -189,29 +200,49 @@ public class Person {
                     waitTime = 0;
                     moving = true;//since wait time has been reached, start moving
                     applyDirection();//set dx and dy
-                    
-                    //start the animation process
-                    anim.setDirection(dir / 2);
-                    anim.keepAnimating(true);
                 }
             }
             
-            else if(moving){
+            if(moving){
                 distanceToPath += speed;
                 curX = x / MainFrame.blockWidth;
                 curY = y / MainFrame.blockHeight;
                 
-                /* If the person is moving up or down, take into account that they will
-                move faster vertically than horizontally. Knowing this, in the case that
-                the person is moving vertically, check if they've moved the path distance
-                vertically. If they are only moving horizontally, check if they've moved
-                the path distance horizontally.
+                /*
+                If the person is moving diagnolly, check if the person has reached their path
+                distance vertically when they haven't reached their horizontal distance. Once this
+                happens, make the person only move horizontally. This has to be checked because
+                the person moves faster vertically than horizontally.
                 */
-                if((dir != 2 && dir != 6 && distanceToPath >= (path * MainFrame.blockHeight) - speed)
-                        || (distanceToPath >= (path * MainFrame.blockWidth))){
+                if((dir == 1 || dir == 3 || dir == 5 || dir == 7)
+                        && distanceToPath >= (MainFrame.blockHeight * path) - speed
+                        && distanceToPath < (MainFrame.blockWidth * path) - speed){
+                    //update curY
+                    y += dy;
+                    curY = y / MainFrame.blockHeight;
+                    
+                    //update the direction to horizontal
+                    if(dir == 1 || dir == 3)
+                        dir = 2;
+                    else
+                        dir = 6;
+                    applyDirection();
+                }
+                
+                if(((dir == 0 || dir == 4) && distanceToPath >= (MainFrame.blockHeight * path) - speed)
+                        || (dir == 2 || dir == 6) && distanceToPath >= (MainFrame.blockWidth * path) - speed){
+                    //add the difference between the person's current coords and the destination
+                    if(dir == 0 || dir == 4)
+                        dy += MainFrame.blockHeight * path - distanceToPath;
+                    else
+                        dx += MainFrame.blockWidth * path - distanceToPath;
+                    
+                    //update curX and curY
+                    curX = x / MainFrame.blockWidth;
+                    curY = y / MainFrame.blockHeight;
+                    
                     moving = false;
                     applyDirection();
-                    anim.keepAnimating(false);
                 }
             }
             
