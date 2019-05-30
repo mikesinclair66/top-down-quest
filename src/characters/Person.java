@@ -70,8 +70,8 @@ public class Person {
         endY += y;
         curX += x;
         curY += y;
-        this.x += MainFrame.blockWidth * x;
-        this.y += MainFrame.blockHeight * y;
+        this.x = MainFrame.blockWidth * startX;
+        this.y = MainFrame.blockHeight * startY;
     }
     
     /**
@@ -202,12 +202,8 @@ public class Person {
                 }
             }
             
-            if(moving){//doesn't work the way it should
+            if(moving){
                 distanceToPath += speed;
-                
-                //difference represents how far the person has to go to reach their goal
-                int differenceX = (MainFrame.blockWidth * path) - distanceToPath;
-                int differenceY = (MainFrame.blockHeight * path) - distanceToPath;
                 
                 /*
                 A person moves more fast vertically than horizontally
@@ -220,10 +216,12 @@ public class Person {
                         && distanceToPath >= (MainFrame.blockHeight * path) - speed
                         && distanceToPath < (MainFrame.blockWidth * path) - speed){
                     if(dir == 1 || dir == 7){
-                        y -= differenceY;
+                        if(y % MainFrame.blockHeight != 0)
+                            y = curY * MainFrame.blockHeight;
                         dir = (dir == 1) ? 2 : 6;
                     } else {
-                        y += differenceY;
+                        if(y % MainFrame.blockHeight != 0)
+                            y = (curY + 1) * MainFrame.blockHeight;
                         dir = (dir == 3) ? 2 : 6;
                     }
                     applyDirection();
@@ -232,10 +230,8 @@ public class Person {
                 //if the person has reached their goal horizontally
                 if((dir == 2 || dir == 6)
                         && distanceToPath >= (MainFrame.blockWidth * path) - speed){
-                    if(dir == 2)
-                        x += differenceX;
-                    else
-                        x -= differenceX;
+                    x = (dir == 2) ?
+                            (curX + 1) * MainFrame.blockWidth : curX * MainFrame.blockWidth;
                     moving = false;
                     applyDirection();
                 }
@@ -243,12 +239,25 @@ public class Person {
                 //if the person has reached their goal vertically
                 else if((dir == 0 || dir == 4)
                         && distanceToPath >= (MainFrame.blockHeight * path) - speed){
-                    if(dir == 0)
-                        y -= differenceY;
-                    else
-                        y += differenceY;
+                    y = (dir == 0) ?
+                            curY * MainFrame.blockHeight : (curY + 1) * MainFrame.blockHeight;
                     moving = false;
                     applyDirection();
+                }
+                
+                /*
+                If the player gets in the person's way while they are in
+                casual mode, make the person stop. When this happens, record
+                the distance that the person needs to go to get to the next
+                block. Once the player gets out of the way, move the person
+                to the next block.
+                */
+                //if the player is in the person's space/radius
+                if(Player.coordX > x - MainFrame.blockWidth
+                        && Player.coordX < x + MainFrame.blockWidth * 2
+                        && Player.coordY > y - MainFrame.blockHeight * 3 / 2
+                        && Player.coordY < y + MainFrame.blockHeight * 2){
+                    
                 }
             }
             
