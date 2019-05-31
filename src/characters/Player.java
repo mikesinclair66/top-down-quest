@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import process.Animation;
 import process.Hotbar;
+import process.Inventory;
 import window.ImageCenter;
 import window.MainFrame;
 
@@ -114,6 +115,44 @@ public class Player {
                 break;
             case KeyEvent.VK_E:
                 interact = true;
+                break;
+                
+            //hotbar hotkey cases
+            case KeyEvent.VK_1:
+                if(1 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 0;
+                break;
+            case KeyEvent.VK_2:
+                if(2 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 1;
+                break;
+            case KeyEvent.VK_3:
+                if(3 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 2;
+                break;
+            case KeyEvent.VK_4:
+                if(4 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 3;
+                break;
+            case KeyEvent.VK_5:
+                if(5 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 4;
+                break;
+            case KeyEvent.VK_6:
+                if(6 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 5;
+                break;
+            case KeyEvent.VK_7:
+                if(7 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 6;
+                break;
+            case KeyEvent.VK_8:
+                if(8 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 7;
+                break;
+            case KeyEvent.VK_9:
+                if(9 <= Inventory.ItemHotbar.SLOTS)
+                    Inventory.ItemHotbar.hotbarSelected = 8;
                 break;
         }
     }
