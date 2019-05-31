@@ -61,7 +61,6 @@ public class Person {
     
     public void draw(Graphics2D comp){
         comp.drawImage(img, x - Player.dx, y - Player.dy, null);
-        comp.fillRect(x - Player.dx, y - Player.dy, MainFrame.blockWidth, MainFrame.blockHeight);
     }
     
     public void moveArea(int x, int y){
@@ -71,8 +70,8 @@ public class Person {
         endY += y;
         curX += x;
         curY += y;
-        this.x += MainFrame.blockWidth * x;
-        this.y += MainFrame.blockHeight * y;
+        this.x = MainFrame.blockWidth * startX;
+        this.y = MainFrame.blockHeight * startY;
     }
     
     /**
@@ -205,49 +204,67 @@ public class Person {
             
             if(moving){
                 distanceToPath += speed;
-                curX = x / MainFrame.blockWidth;
-                curY = y / MainFrame.blockHeight;
                 
                 /*
-                If the person is moving diagnolly, check if the person has reached their path
-                distance vertically when they haven't reached their horizontal distance. Once this
-                happens, make the person only move horizontally. This has to be checked because
-                the person moves faster vertically than horizontally.
+                A person moves more fast vertically than horizontally
+                because a block has more width than height. Because of
+                this, if the person is moving diagnolly, make them stop
+                moving vertically once they've reached their vertical
+                goal.
                 */
                 if((dir == 1 || dir == 3 || dir == 5 || dir == 7)
                         && distanceToPath >= (MainFrame.blockHeight * path) - speed
                         && distanceToPath < (MainFrame.blockWidth * path) - speed){
-                    //update curY
-                    y += dy;
-                    curY = y / MainFrame.blockHeight;
-                    
-                    //update the direction to horizontal
-                    if(dir == 1 || dir == 3)
-                        dir = 2;
-                    else
-                        dir = 6;
+                    if(dir == 1 || dir == 7){
+                        if(y % MainFrame.blockHeight != 0)
+                            y = curY * MainFrame.blockHeight;
+                        dir = (dir == 1) ? 2 : 6;
+                    } else {
+                        if(y % MainFrame.blockHeight != 0)
+                            y = (curY + 1) * MainFrame.blockHeight;
+                        dir = (dir == 3) ? 2 : 6;
+                    }
                     applyDirection();
                 }
                 
-                if(((dir == 0 || dir == 4) && distanceToPath >= (MainFrame.blockHeight * path) - speed)
-                        || (dir == 2 || dir == 6) && distanceToPath >= (MainFrame.blockWidth * path) - speed){
-                    //add the difference between the person's current coords and the destination
-                    if(dir == 0 || dir == 4)
-                        dy += MainFrame.blockHeight * path - distanceToPath;
-                    else
-                        dx += MainFrame.blockWidth * path - distanceToPath;
-                    
-                    //update curX and curY
-                    curX = x / MainFrame.blockWidth;
-                    curY = y / MainFrame.blockHeight;
-                    
+                //if the person has reached their goal horizontally
+                if((dir == 2 || dir == 6)
+                        && distanceToPath >= (MainFrame.blockWidth * path) - speed){
+                    x = (dir == 2) ?
+                            (curX + 1) * MainFrame.blockWidth : curX * MainFrame.blockWidth;
                     moving = false;
                     applyDirection();
+                }
+                
+                //if the person has reached their goal vertically
+                else if((dir == 0 || dir == 4)
+                        && distanceToPath >= (MainFrame.blockHeight * path) - speed){
+                    y = (dir == 0) ?
+                            curY * MainFrame.blockHeight : (curY + 1) * MainFrame.blockHeight;
+                    moving = false;
+                    applyDirection();
+                }
+                
+                /*
+                If the player gets in the person's way while they are in
+                casual mode, make the person stop. When this happens, record
+                the distance that the person needs to go to get to the next
+                block. Once the player gets out of the way, move the person
+                to the next block.
+                */
+                //if the player is in the person's space/radius
+                if(Player.coordX > x - MainFrame.blockWidth
+                        && Player.coordX < x + MainFrame.blockWidth * 2
+                        && Player.coordY > y - MainFrame.blockHeight * 3 / 2
+                        && Player.coordY < y + MainFrame.blockHeight * 2){
+                    
                 }
             }
             
             x += dx;
             y += dy;
+            curX = x / MainFrame.blockWidth;
+            curY = y / MainFrame.blockHeight;
             anim.update();
             img = anim.getAnim();
         }

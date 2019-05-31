@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import process.Animation;
+import process.Hotbar;
 import window.ImageCenter;
 import window.MainFrame;
 
@@ -26,6 +27,9 @@ public class Player {
     
     public static void draw(Graphics2D comp){
         comp.drawImage(img, x, y, null);
+        
+        //draw components pertaining to the player
+        Hotbar.draw(comp);
     }
     
     public static void init(){
